@@ -38,6 +38,8 @@ public:
 
     autonomous_mode_value_ = declare_parameter<int>("autonomous_mode_value", 1);
     manual_mode_value_ = declare_parameter<int>("manual_mode_value", 0);
+    force_autonomous_control_mode_ = declare_parameter<bool>(
+      "force_autonomous_control_mode", false);
     use_veh_diag_for_control_mode_ = declare_parameter<bool>(
       "use_veh_diag_for_control_mode", true);
 
@@ -63,6 +65,9 @@ public:
     RCLCPP_INFO(get_logger(), "  velocity     : %s", velocity_output_topic_.c_str());
     RCLCPP_INFO(get_logger(), "  steering     : %s", steering_output_topic_.c_str());
     RCLCPP_INFO(get_logger(), "  control_mode : %s", control_mode_output_topic_.c_str());
+    RCLCPP_INFO(
+      get_logger(), "  force_autonomous_control_mode : %s",
+      force_autonomous_control_mode_ ? "true" : "false");
   }
 
 private:
@@ -147,6 +152,10 @@ private:
   {
     using ControlModeReport = autoware_auto_vehicle_msgs::msg::ControlModeReport;
 
+    if (force_autonomous_control_mode_) {
+      return ControlModeReport::AUTONOMOUS;
+    }
+
     if (use_veh_diag_for_control_mode_) {
       if (msg.veh_diag_fb.veh_fb_auto_can_ctrl_cmd || msg.veh_diag_fb.veh_fb_auto_io_can_cmd) {
         return ControlModeReport::AUTONOMOUS;
@@ -180,6 +189,7 @@ private:
   int disabled_gear_value_;
   int autonomous_mode_value_;
   int manual_mode_value_;
+  bool force_autonomous_control_mode_;
   bool use_veh_diag_for_control_mode_;
 
   rclcpp::Subscription<yhs_can_interfaces::msg::ChassisInfoFb>::SharedPtr chassis_info_sub_;

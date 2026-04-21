@@ -12,4 +12,5 @@ yhs_autoware_vehicle_status_bridge_node:
     disabled_gear_value: 0
     autonomous_mode_value: 1
     manual_mode_value: 0
+    force_autonomous_control_mode: false
     use_veh_diag_for_control_mode: true

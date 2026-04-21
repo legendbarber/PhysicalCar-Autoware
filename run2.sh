@@ -29,8 +29,11 @@ ros2 launch yhs_can_control tod_autoware_bridge.launch.py
 # terminal 4
 cd ~/yhs_control2_ws
 source install/setup.bash
-ros2 launch yhs_autoware_vehicle_status_bridge yhs_autoware_vehicle_status_bridge.launch.py
-
+ros2 run yhs_autoware_vehicle_status_bridge yhs_autoware_vehicle_status_bridge_node --ros-args \
+  --params-file src/yhs_autoware_vehicle_status_bridge/params/yhs_autoware_vehicle_status_bridge.param.yaml \
+  -p force_autonomous_control_mode:=true \
+  -p use_veh_diag_for_control_mode:=false
+  
 # terminal 5
 cd ~/yhs_control2_ws
 source install/setup.bash
@@ -40,6 +43,37 @@ ros2 launch carla_pointcloud_preprocessor carla_pointcloud_preprocessor.launch.p
 cd ~/yhs_control2_ws
 source install/setup.bash
 ros2 launch novatel_oem7_driver novatel_oem7_net.launch.py
+
+# terminal 7
+cd ~/astudio/furive-kit-backend/client-deploy/
+LOG_FILTER_MODE=problems bash launch_caches_modules.sh 
+---
+# rosbag
+# terminal 1
+cd ~/yhs_control2_ws
+export ROS_LOCALHOST_ONLY=1
+source install/setup.bash
+python3 ./rosbags/freeze_frame.py ./rosbags/scene1 --offset 6.0 --mode stack --rate 5 --clock-rate 100
+
+# terminal 2
+cd ~/yhs_control2_ws
+export ROS_LOCALHOST_ONLY=1
+source install/setup.bash
+ros2 run yhs_autoware_vehicle_status_bridge yhs_autoware_vehicle_status_bridge_node --ros-args \
+  --params-file src/yhs_autoware_vehicle_status_bridge/params/yhs_autoware_vehicle_status_bridge.param.yaml \
+  -p force_autonomous_control_mode:=true \
+  -p use_veh_diag_for_control_mode:=false
+
+# terminal 3
+# cd ~/yhs_control2_ws
+# source install/setup.bash
+# ros2 launch yhs_can_control tod_autoware_bridge.launch.py
+
+# terminal 4
+cd ~/yhs_control2_ws
+export ROS_LOCALHOST_ONLY=1
+source install/setup.bash
+ros2 launch carla_pointcloud_preprocessor carla_pointcloud_preprocessor.launch.py use_sim_time:=true
 
 # terminal 7
 cd ~/astudio/furive-kit-backend/client-deploy/
