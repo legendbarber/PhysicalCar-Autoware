@@ -1,0 +1,1 @@
+Disabled in this workspace because src/autoware_auto_msgs/autoware_auto_vehicle_msgs already provides the same package name.

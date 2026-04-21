@@ -1,0 +1,12 @@
+tod_autoware_bridge_node:
+  ros__parameters:
+    tod_topic: "/tod_cmd"
+    autoware_control_topic: "/control/command/control_cmd"
+    enable_autoware_to_tod: true
+    enable_tod_to_autoware: false
+    forward_gear: 4
+    reverse_gear: 2
+    brake_from_negative_accel_gain: 20.0
+    brake_to_negative_accel_gain: 0.05
+    max_brake_command: 100.0
+    self_echo_suppression_ms: 50

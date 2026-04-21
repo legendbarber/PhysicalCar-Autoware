@@ -1,0 +1,15 @@
+yhs_autoware_vehicle_status_bridge_node:
+  ros__parameters:
+    chassis_info_topic: "/chassis_info_fb"
+    gear_output_topic: "/vehicle/status/gear_status"
+    velocity_output_topic: "/vehicle/status/velocity_status"
+    steering_output_topic: "/vehicle/status/steering_status"
+    control_mode_output_topic: "/vehicle/status/control_mode"
+    park_gear_value: 1
+    reverse_gear_value: 2
+    neutral_gear_value: 3
+    forward_gear_value: 4
+    disabled_gear_value: 0
+    autonomous_mode_value: 1
+    manual_mode_value: 0
+    use_veh_diag_for_control_mode: true
