@@ -8,11 +8,12 @@ using namespace std::chrono_literals;
 namespace yhs{
 
 CanControl::CanControl(rclcpp::Node::SharedPtr node)
-: node_(node),if_name_("can2"), can_socket_(-1),wheel_base_(0.6)
+: node_(node),if_name_("can2"), can_socket_(-1),wheel_base_(0.6), publish_tf_(false)
 {
 
     READ_PARAM(std::string, "can_name", (if_name_), "can2");
     READ_PARAM(double, "wheel_base", (wheel_base_), 0.6);
+    READ_PARAM(bool, "publish_tf", (publish_tf_), false);
 
     io_cmd_subscriber_ = node_->create_subscription<yhs_can_interfaces::msg::IoCmd>("io_cmd", 1, std::bind(&CanControl::io_cmd_callback, this, std::placeholders::_1));
                             
@@ -22,13 +23,9 @@ CanControl::CanControl(rclcpp::Node::SharedPtr node)
     
     odom_pub_ = node_->create_publisher<nav_msgs::msg::Odometry>("odom", 1);
 
-    //
-    // vvv TF Broadcaster 초기화 코드 추가 vvv
-    //
-    tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_);
-    //
-    // ^^^ 코드 추가 끝 ^^^
-    //
+    if (publish_tf_) {
+        tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_);
+    }
 }
 
 void CanControl::io_cmd_callback(const yhs_can_interfaces::msg::IoCmd::SharedPtr io_cmd_msg)
@@ -418,8 +415,9 @@ void CanControl::publish_odom(const double velocity, const double steering)
     t.transform.rotation.z = quat_tf.z();
     t.transform.rotation.w = quat_tf.w();
 
-    // TF 발행
-    tf_broadcaster_->sendTransform(t);
+    if (publish_tf_) {
+        tf_broadcaster_->sendTransform(t);
+    }
     //
     // ^^^ TF 발행 코드 끝 ^^^
     //

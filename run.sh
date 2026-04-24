@@ -24,26 +24,38 @@ source install/setup.bash &&
 ros2 launch yhs_can_control yhs_can_control.launch.py
 "
 
-open_term "2_ouster_ros" "
+open_term "2_os_sensor_tf" "
+cd '$WS' &&
+source install/setup.bash &&
+ros2 run tf2_ros static_transform_publisher \
+  0 0 0 0 0 0 \
+  sensor_kit_base_link os_sensor
+"
+
+open_term "3_ouster_ros" "
 cd '$WS' &&
 source install/setup.bash &&
 ros2 launch ouster_ros sensor.launch.xml \
   sensor_hostname:=os-122124000141.local \
   use_sim_time:=false \
-  sensor_frame:=base_link \
+  sensor_frame:=os_sensor \
+  lidar_frame:=os_lidar \
+  imu_frame:=os_imu \
+  point_cloud_frame:=os_lidar \
   point_type:=original \
   points_topic:=/sensing/lidar/top/pointcloud \
   imu_topic:=/sensing/imu/imu_data \
-  timestamp_mode:=TIME_FROM_ROS_TIME
+  timestamp_mode:=TIME_FROM_ROS_TIME \
+  viz:=false
 "
 
-open_term "3_tod_autoware_bridge" "
+open_term "4_tod_autoware_bridge" "
 cd '$WS' &&
 source install/setup.bash &&
 ros2 launch yhs_can_control tod_autoware_bridge.launch.py
 "
 
-open_term "4_vehicle_status_bridge" "
+open_term "5_vehicle_status_bridge" "
 cd '$WS' &&
 source install/setup.bash
 ros2 run yhs_autoware_vehicle_status_bridge yhs_autoware_vehicle_status_bridge_node --ros-args \
@@ -52,19 +64,19 @@ ros2 run yhs_autoware_vehicle_status_bridge yhs_autoware_vehicle_status_bridge_n
   -p use_veh_diag_for_control_mode:=false
 "
 
-open_term "5_pointcloud_preprocessor" "
+open_term "6_pointcloud_preprocessor" "
 cd '$WS' &&
 source install/setup.bash &&
 ros2 launch carla_pointcloud_preprocessor carla_pointcloud_preprocessor.launch.py
 "
 
-open_term "6_novatel" "
+open_term "7_novatel" "
 cd '$WS' &&
 source install/setup.bash &&
-ros2 launch novatel_oem7_driver novatel_oem7_net.launch.py
+ros2 launch novatel_oem7_driver oem7_net.launch.py
 "
 
-open_term "7_backend" "
+open_term "8_backend" "
 cd '$BACKEND' &&
 LOG_FILTER_MODE=problems bash launch_caches_modules.sh
 "

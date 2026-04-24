@@ -6,6 +6,7 @@ tod_autoware_bridge_node:
     enable_tod_to_autoware: false
     forward_gear: 4
     reverse_gear: 2
+    force_drive_gear: true
     brake_from_negative_accel_gain: 20.0
     brake_to_negative_accel_gain: 0.05
     max_brake_command: 100.0

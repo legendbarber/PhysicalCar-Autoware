@@ -49,9 +49,10 @@ private:
 
 	rclcpp::Node::SharedPtr node_;
 
-	std::string if_name_;
+  std::string if_name_;
   int can_socket_;
   double wheel_base_;
+  bool publish_tf_;
   std::thread thread_;
   
   rclcpp::Subscription<yhs_can_interfaces::msg::IoCmd>::SharedPtr io_cmd_subscriber_;
@@ -78,4 +79,3 @@ private:
 
 
 #endif
-

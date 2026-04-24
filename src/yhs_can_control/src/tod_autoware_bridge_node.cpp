@@ -27,6 +27,7 @@ public:
     enable_tod_to_autoware_ = declare_parameter<bool>("enable_tod_to_autoware", false);
     forward_gear_ = declare_parameter<int>("forward_gear", 1);
     reverse_gear_ = declare_parameter<int>("reverse_gear", 2);
+    force_drive_gear_ = declare_parameter<bool>("force_drive_gear", false);
     brake_from_negative_accel_gain_ = declare_parameter<double>(
       "brake_from_negative_accel_gain", 20.0);
     brake_to_negative_accel_gain_ = declare_parameter<double>(
@@ -92,13 +93,14 @@ private:
     tod_msg.data.resize(4);
 
     const double signed_speed = static_cast<double>(msg->longitudinal.speed);
-    const double brake_command = acceleration_to_brake(
-      static_cast<double>(msg->longitudinal.acceleration));
+    const double signed_acceleration = static_cast<double>(msg->longitudinal.acceleration);
+    const double brake_command = acceleration_to_brake(signed_speed, signed_acceleration);
 
     tod_msg.data[0] = std::abs(signed_speed);
     tod_msg.data[1] = brake_command;
     tod_msg.data[2] = static_cast<double>(msg->lateral.steering_tire_angle) * kRadToDeg;
-    tod_msg.data[3] = signed_speed < 0.0 ? reverse_gear_ : forward_gear_;
+    tod_msg.data[3] = force_drive_gear_ ? forward_gear_ :
+      (signed_speed < 0.0 ? reverse_gear_ : forward_gear_);
 
     last_tod_command_ = {tod_msg.data[0], tod_msg.data[1], tod_msg.data[2], tod_msg.data[3]};
     last_tod_publish_time_ = get_clock()->now();
@@ -163,6 +165,27 @@ private:
     return clamp(-acceleration * brake_from_negative_accel_gain_, 0.0, max_brake_command_);
   }
 
+  double acceleration_to_brake(
+    const double signed_speed, const double signed_acceleration) const
+  {
+    if (almost_equal(signed_speed, 0.0)) {
+      return acceleration_to_brake(signed_acceleration);
+    }
+
+    // In reverse, Autoware uses negative acceleration to speed the vehicle up backward.
+    // Only convert acceleration into brake when it opposes the requested travel direction.
+    const bool acceleration_opposes_motion =
+      (signed_speed > 0.0 && signed_acceleration < 0.0) ||
+      (signed_speed < 0.0 && signed_acceleration > 0.0);
+
+    if (!acceleration_opposes_motion) {
+      return 0.0;
+    }
+
+    return clamp(
+      std::abs(signed_acceleration) * brake_from_negative_accel_gain_, 0.0, max_brake_command_);
+  }
+
   double brake_to_acceleration(const double brake) const
   {
     if (brake <= 0.0) {
@@ -212,6 +235,7 @@ private:
   bool enable_tod_to_autoware_;
   int forward_gear_;
   int reverse_gear_;
+  bool force_drive_gear_;
   double brake_from_negative_accel_gain_;
   double brake_to_negative_accel_gain_;
   double max_brake_command_;

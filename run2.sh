@@ -15,16 +15,18 @@ ros2 launch ouster_ros sensor.launch.xml \
   sensor_hostname:=os-122124000141.local \
   use_sim_time:=false \
   sensor_frame:=base_link \
+  point_cloud_frame:=base_link \
   point_type:=original \
   points_topic:=/sensing/lidar/top/pointcloud \
   imu_topic:=/sensing/imu/imu_data \
   timestamp_mode:=TIME_FROM_ROS_TIME
 
-
 # terminal 3
 cd ~/yhs_control2_ws
 source install/setup.bash
 ros2 launch yhs_can_control tod_autoware_bridge.launch.py 
+#ros2 launch tod_autoware_bridge tod_autoware_bridge.launch.py
+
 
 # terminal 4
 cd ~/yhs_control2_ws

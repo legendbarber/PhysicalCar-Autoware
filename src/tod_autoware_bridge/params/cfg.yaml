@@ -1,0 +1,10 @@
+tod_autoware_bridge_node:
+  ros__parameters:
+    control_topic: "/control/command/control"
+    gear_topic: "/control/command/gear"
+    tod_topic: "/tod_cmd"
+    default_tod_gear: 3
+    use_speed_sign_fallback: true
+    speed_epsilon: 0.01
+    brake_accel_gain: 50.0
+    max_brake_command: 255
