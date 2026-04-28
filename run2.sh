@@ -49,6 +49,20 @@ ros2 launch novatel_oem7_driver novatel_oem7_net.launch.py
 # terminal 7
 cd ~/astudio/furive-kit-backend/client-deploy/
 LOG_FILTER_MODE=problems bash launch_caches_modules.sh 
+
+# terminal 8
+cd ~/yhs_control2_ws
+source install/setup.bash
+ros2 run approx_camera_info_publisher approx_camera_info_publisher \
+--ros-args \
+-p image_topic:=/test/camera/image_raw \
+-p camera_info_topic:=/test/camera/camera_info \
+-p hfov_deg:=90.0
+
+# terminal 9
+cd ~/yhs_control2_ws
+python3 cam.py --cam 4 --topic /test/camera/image_raw --pub-fps 10
+
 ---
 # rosbag
 # terminal 1

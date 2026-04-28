@@ -9,8 +9,14 @@
 /home/futuredrive/yhs_control2_ws/client-deploy/.caches/[furive-control]AW-Control_v1.0.0_ws/install/vehicle_cmd_gate/share/vehicle_cmd_gate/config/vehicle_cmd_gate.param.yaml
 /home/futuredrive/yhs_control2_ws/client-deploy/.caches/[furive-control]AW-Control_v1.0.0_ws/src/universe/autoware.universe/control/vehicle_cmd_gate/config/vehicle_cmd_gate.param.yaml
 /home/futuredrive/yhs_control2_ws/client-deploy/.caches/[furive-planning]AW-Planning_v1.0.0_ws/install/autoware_launch/share/autoware_launch/config/planning/scenario_planning/common/motion_velocity_smoother/motion_velocity_smoother.param.yaml
-/home/futuredrive/yhs_control2_ws/client-deploy/.caches/[furive-planning]AW-Planning_v1.0.0_ws/src/launcher/autoware_launch/autoware_launch/config/planning/scenario_planning/common/motion_velocity_smoother/motion_velocity_smoother.param.yaml
+/home/futuredrive/yhs_control2_ws/client-deploy/.caches/[furive-planning]AW-Planning_v1.0.0_ws/src/launcher/autoware_launch/autoware_launch/config/planning/scenario_planning/common/mkotion_velocity_smoother/motion_velocity_smoother.param.yaml
 -> 여기서 max_velocity 상한을 걸어놧음(빌드까지 다함)
+
+### /sensing/lidar/top/pointcloud발행 명령어
+source /home/futuredrive/yhs_control2_ws/install/setup.bash
+
+ros2 topic pub -r 1 /sensing/lidar/top/pointcloud sensor_msgs/msg/PointCloud2 \
+"{header: {frame_id: os_lidar}, height: 1, width: 1, fields: [{name: x, offset: 0, datatype: 7, count: 1}, {name: y, offset: 4, datatype: 7, count: 1}, {name: z, offset: 8, datatype: 7, count: 1}], is_bigendian: false, point_step: 12, row_step: 12, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], is_dense: true}"
 
 
 ### 기어값은 여기
@@ -41,3 +47,8 @@ out.steering_tire_angle = static_cast<float>(-msg.ctrl_fb.ctrl_fb_steering * kDe
 /home/futuredrive/yhs_control2_ws/src/yhs_can_control/src/yhs_can_control_node.cpp
 publish_odom(msg.ctrl_fb_velocity, msg.ctrl_fb_steering/180*3.1415);
 publish_odom(msg.ctrl_fb_velocity, msg.ctrl_fb_steering/180*3.1415);
+
+###
+run.sh : 풀스택 실행명령어 : 차량 드라이버, 센서드라이버, autoware모듈
+prepare.sh : DDS 세팅 명령어
+config_validate.sh : 차량 config검증 스크립트

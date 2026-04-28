@@ -86,7 +86,9 @@ futuredrive@futuredrive-desktop:~/yhs_control2_ws$ ros2 topic list
 /tf_static
 
 docker rm -f $(docker ps -aq)
-
+sudo ip addr flush dev eth0
+sudo ip addr add 169.254.100.1/16 dev eth0
+sudo ip link set eth0 up
 getent hosts os-122124000141.local
 sudo ip addr add 192.168.20.99/24 dev eth0
 ping -c 3 192.168.20.100

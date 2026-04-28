@@ -68,7 +68,7 @@ open_term "6_pointcloud_preprocessor" "
 cd '$WS' &&
 source install/setup.bash &&
 ros2 launch carla_pointcloud_preprocessor carla_pointcloud_preprocessor.launch.py
-"
+" 
 
 open_term "7_novatel" "
 cd '$WS' &&
@@ -76,7 +76,44 @@ source install/setup.bash &&
 ros2 launch novatel_oem7_driver oem7_net.launch.py
 "
 
-open_term "8_backend" "
+# TODO: replace the identity transform below with the real camera mounting pose.
+open_term "8_test_camera_tf" "
+cd '$WS' &&
+source install/setup.bash &&
+ros2 run tf2_ros static_transform_publisher \
+  0 0 0 0 0 0 \
+  sensor_kit_base_link test_camera/camera_link &
+ros2 run tf2_ros static_transform_publisher \
+  0 0 0 -1.57079632679 0 -1.57079632679 \
+  test_camera/camera_link test_camera/camera_optical_link &
+wait
+"
+
+open_term "9_test_camera_image" "
+cd '$WS' &&
+source install/setup.bash &&
+python3 cam.py \
+  --cam 4 \
+  --topic /test/camera/image_raw \
+  --width 640 \
+  --height 480 \
+  --pub-fps 5 \
+  --frame-id test_camera/camera_optical_link
+"
+
+open_term "10_test_camera_info" "
+cd '$WS' &&
+source install/setup.bash &&
+ros2 run approx_camera_info_publisher approx_camera_info_publisher \
+  --ros-args \
+  -p image_topic:=/test/camera/image_raw \
+  -p camera_info_topic:=/test/camera/camera_info \
+  -p frame_id_override:=test_camera/camera_optical_link \
+  -p hfov_deg:=90.0
+"
+
+
+open_term "11_backend" "
 cd '$BACKEND' &&
 LOG_FILTER_MODE=problems bash launch_caches_modules.sh
 "

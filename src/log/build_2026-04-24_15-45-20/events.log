@@ -1,0 +1,21 @@
+[0.000000] (-) TimerEvent: {}
+[0.000785] (-) JobUnselected: {'identifier': 'approx_camera_info_publisher'}
+[0.000922] (-) JobUnselected: {'identifier': 'autoware_auto_control_msgs'}
+[0.000977] (-) JobUnselected: {'identifier': 'autoware_auto_geometry_msgs'}
+[0.001108] (-) JobUnselected: {'identifier': 'autoware_auto_mapping_msgs'}
+[0.001217] (-) JobUnselected: {'identifier': 'autoware_auto_msgs'}
+[0.001346] (-) JobUnselected: {'identifier': 'autoware_auto_perception_msgs'}
+[0.001419] (-) JobUnselected: {'identifier': 'autoware_auto_planning_msgs'}
+[0.001456] (-) JobUnselected: {'identifier': 'autoware_auto_system_msgs'}
+[0.001489] (-) JobUnselected: {'identifier': 'autoware_auto_vehicle_msgs'}
+[0.001521] (-) JobUnselected: {'identifier': 'carla_crop_box_filter'}
+[0.001553] (-) JobUnselected: {'identifier': 'carla_pointcloud_preprocessor'}
+[0.001585] (-) JobUnselected: {'identifier': 'novatel_oem7_driver'}
+[0.001616] (-) JobUnselected: {'identifier': 'novatel_oem7_msgs'}
+[0.001648] (-) JobUnselected: {'identifier': 'ouster_ros'}
+[0.001680] (-) JobUnselected: {'identifier': 'ouster_sensor_msgs'}
+[0.001711] (-) JobUnselected: {'identifier': 'tod_autoware_bridge'}
+[0.001743] (-) JobUnselected: {'identifier': 'yhs_autoware_vehicle_status_bridge'}
+[0.001776] (-) JobUnselected: {'identifier': 'yhs_can_control'}
+[0.001807] (-) JobUnselected: {'identifier': 'yhs_can_interfaces'}
+[0.001842] (-) EventReactorShutdown: {}

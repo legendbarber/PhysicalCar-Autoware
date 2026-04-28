@@ -1,3 +1,39 @@
+### senser_kit_calibration.yaml
+sensor_kit_base_link:
+  lidar_base_link:
+    lidar_link:
+      x: 0.0
+      y: 0.0
+      z: 0.04
+      roll: 0.0
+      pitch: 0.0
+      yaw: 3.1416
+    imu_link:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      roll: 0.0
+      pitch: 0.0
+      yaw: 0.0
+  gnss_link:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+    
+### sensors_calibration.yaml
+base_link:
+  sensor_kit_base_link:
+    x: 0.795
+    y: 0.0
+    z: 0.915
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+
+### vehicle_info.param.yaml
 /**:
   ros__parameters:
     wheel_radius: 0.210 # The radius of the wheel, primarily used for dead reckoning.

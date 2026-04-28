@@ -1,0 +1,8 @@
+[1.252s] Invoking command in '/home/futuredrive/yhs_control2_ws/src/build/approx_camera_info_publisher': PYTHONPATH=/home/futuredrive/yhs_control2_ws/src/build/approx_camera_info_publisher/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/futuredrive/yhs_control2_ws/src/install/approx_camera_info_publisher/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/futuredrive/yhs_control2_ws/src/build/approx_camera_info_publisher/build --no-deps symlink_data
+[1.628s] usage: setup.py [global_opts] cmd1 [cmd1_opts] [cmd2 [cmd2_opts] ...]
+[1.628s]    or: setup.py --help [cmd1 cmd2 ...]
+[1.628s]    or: setup.py --help-commands
+[1.628s]    or: setup.py cmd --help
+[1.629s] 
+[1.629s] error: option --editable not recognized
+[1.684s] Invoked command in '/home/futuredrive/yhs_control2_ws/src/build/approx_camera_info_publisher' returned '1': PYTHONPATH=/home/futuredrive/yhs_control2_ws/src/build/approx_camera_info_publisher/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/futuredrive/yhs_control2_ws/src/install/approx_camera_info_publisher/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/futuredrive/yhs_control2_ws/src/build/approx_camera_info_publisher/build --no-deps symlink_data
