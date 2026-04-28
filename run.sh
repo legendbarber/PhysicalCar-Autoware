@@ -24,12 +24,16 @@ source install/setup.bash &&
 ros2 launch yhs_can_control yhs_can_control.launch.py
 "
 
-open_term "2_os_sensor_tf" "
+open_term "2_sensor_tf" "
 cd '$WS' &&
 source install/setup.bash &&
 ros2 run tf2_ros static_transform_publisher \
+  0.795 0 0.915 0 0 0 \
+  base_link sensor_kit_base_link &
+ros2 run tf2_ros static_transform_publisher \
   0 0 0 0 0 0 \
-  sensor_kit_base_link os_sensor
+  sensor_kit_base_link os_sensor &
+wait
 "
 
 open_term "3_ouster_ros" "
@@ -46,7 +50,7 @@ ros2 launch ouster_ros sensor.launch.xml \
   points_topic:=/sensing/lidar/top/pointcloud \
   imu_topic:=/sensing/imu/imu_data \
   timestamp_mode:=TIME_FROM_ROS_TIME \
-  viz:=false
+  viz:=true
 "
 
 open_term "4_tod_autoware_bridge" "
@@ -93,10 +97,10 @@ open_term "9_test_camera_image" "
 cd '$WS' &&
 source install/setup.bash &&
 python3 cam.py \
-  --cam 4 \
+  --cam 3 \
   --topic /test/camera/image_raw \
-  --width 640 \
-  --height 480 \
+  --width 1920 \
+  --height 1080 \
   --pub-fps 5 \
   --frame-id test_camera/camera_optical_link
 "

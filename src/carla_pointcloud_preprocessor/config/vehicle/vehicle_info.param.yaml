@@ -4,9 +4,9 @@
     wheel_width: 0.120 # The lateral width of a wheel tire, primarily used for dead reckoning.
     wheel_base: 0.850 # between front wheel center and rear wheel center
     wheel_tread: 0.645 # between left wheel center and right wheel center
-    front_overhang: 1.2 #0.375 # between front wheel center and vehicle front
-    rear_overhang: 1.2 #0.375 # between rear wheel center and vehicle rear
-    left_overhang: 0.6 #0.0875 # between left wheel center and vehicle left
-    right_overhang: 0.6 #0.0875 # between right wheel center and vehicle right
-    vehicle_height: 1.5
+    front_overhang: 0.575 #0.375 # between front wheel center and vehicle front
+    rear_overhang: 0.375 #0.375 # between rear wheel center and vehicle rear
+    left_overhang: 0.1875 #0.0875 # between left wheel center and vehicle left
+    right_overhang: 0.1875 #0.0875 # between right wheel center and vehicle right
+    vehicle_height: 1.2
     max_steer_angle: 0.4363 # [rad]
